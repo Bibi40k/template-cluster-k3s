@@ -31,6 +31,7 @@ main() {
 
     # Install Flux
     kubectl --kubeconfig=$KUBECONFIG apply --kustomize=./cluster/base/flux-system
+    kubectl --kubeconfig=$KUBECONFIG apply --kustomize=./cluster/base/flux-system
 
     # Verify Flux components are running in the cluster
     kubectl --kubeconfig=$KUBECONFIG get pods -n flux-system
