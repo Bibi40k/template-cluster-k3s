@@ -53,8 +53,3 @@ elif [ "$OS" == "Linux" ]; then
     source ~/.bashrc
     sed -i "s/BOOTSTRAP_AGE_PUBLIC_KEY.*/BOOTSTRAP_AGE_PUBLIC_KEY=\"${AGE_PUBLIC_KEY}\"/g" "${PROJECT_DIR}/.config.env"
 fi
-
-if ( ${PROJECT_DIR}/configure.sh --verify | grep 'ERROR' ); then
-    printf "\n !!! There are required variables missing in .config.env !!!\n\n"
-    exit 0
-fi
