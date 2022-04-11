@@ -6,13 +6,9 @@ set -o pipefail
 # shellcheck disable=SC2155
 export PROJECT_DIR=$(git rev-parse --show-toplevel)
 
-echo "PJDIR="${PROJECT_DIR}
-
 # shellcheck disable=SC2155
 export SOPS_AGE_KEY_FILE=~/.config/sops/age/keys.txt
 
-# shellcheck disable=SC1091
-source "${PROJECT_DIR}/.config.env"
 source "${PROJECT_DIR}/scripts/functions.inc"
 
 OS=$(checkOS)
@@ -48,7 +44,7 @@ AGE_PUBLIC_KEY=$(cat $SOPS_AGE_KEY_FILE | grep 'public key' | awk '{print $4}')
 
 if [ "$OS" == "MacOS" ]; then
     source ~/.bash_profile
-    sed -i -e "s/BOOTSTRAP_AGE_PUBLIC_KEY.*/BOOTSTRAP_AGE_PUBLIC_KEY=\"${AGE_PUBLIC_KEY}\"/" ${PROJECT_DIR}/.config.env
+    sed -i '' -e "s/BOOTSTRAP_AGE_PUBLIC_KEY.*/BOOTSTRAP_AGE_PUBLIC_KEY=\"${AGE_PUBLIC_KEY}\"/" ${PROJECT_DIR}/.config.env
 elif [ "$OS" == "Linux" ]; then
     source ~/.bashrc
     sed -i "s/BOOTSTRAP_AGE_PUBLIC_KEY.*/BOOTSTRAP_AGE_PUBLIC_KEY=\"${AGE_PUBLIC_KEY}\"/g" "${PROJECT_DIR}/.config.env"
