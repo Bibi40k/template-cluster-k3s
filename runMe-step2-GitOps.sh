@@ -19,6 +19,7 @@ fi
 KUBECONFIG=~/.kube/config
 
 flux --kubeconfig=$KUBECONFIG check --pre
+
 kubectl --kubeconfig=$KUBECONFIG \
     create namespace flux-system \
     --dry-run=client -o yaml | kubectl \
@@ -30,7 +31,7 @@ kubectl --kubeconfig=$KUBECONFIG \
     delete secret sops-age \
     --ignore-not-found
 
-cat $SOPS_AGE_KEY_FILE |
+cat "$SOPS_AGE_KEY_FILE" |
     kubectl --kubeconfig=$KUBECONFIG \
     -n flux-system \
     create secret generic sops-age \
@@ -41,8 +42,8 @@ git commit -m "push from step2-GitOps"
 git push
 
 # Install Flux
-kubectl --kubeconfig=$KUBECONFIG apply --kustomize=./cluster/base/flux-system
-kubectl --kubeconfig=$KUBECONFIG apply --kustomize=./cluster/base/flux-system
+kubectl --kubeconfig=$KUBECONFIG apply --kustomize=${PROJECT_DIR}/cluster/base/flux-system
+kubectl --kubeconfig=$KUBECONFIG apply --kustomize=${PROJECT_DIR}/cluster/base/flux-system
 
 # Verify Flux components are running in the cluster
-kubectl --kubeconfig=$KUBECONFIG get pods -n flux-system
+watch -n kubectl --kubeconfig=$KUBECONFIG get pods -n flux-system
