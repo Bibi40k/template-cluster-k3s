@@ -6,9 +6,6 @@ set -o pipefail
 # shellcheck disable=SC2155
 export PROJECT_DIR=$(git rev-parse --show-toplevel)
 
-# shellcheck disable=SC2155
-export SOPS_AGE_KEY_FILE=~/.config/sops/age/keys.txt
-
 source "${PROJECT_DIR}/scripts/functions.inc"
 
 OS=$(checkOS)
@@ -30,17 +27,26 @@ printf "\n * Creating a Age Private / Public Key\n"
 age-keygen -o age.agekey
 
 printf " * Setting up the directory for the Age key and move the Age file to it\n"
-mkdir -p ~/.config/sops/age
-mv age.agekey $SOPS_AGE_KEY_FILE
+if [ "$OS" == "MacOS" ]; then
+    # shellcheck disable=SC2155
+    export SOPS_AGE_KEY_FILE="$HOME/Library/Application Support/sops/age/keys.txt"
+    mkdir -p "$HOME/Library/Application Support/sops/age"
+    mv age.agekey "$SOPS_AGE_KEY_FILE"
+elif [ "$OS" == "Linux" ]; then
+    # shellcheck disable=SC2155
+    export SOPS_AGE_KEY_FILE=~/.config/sops/age/keys.txt
+    mkdir -p ~/.config/sops/age
+    mv age.agekey "$SOPS_AGE_KEY_FILE"
+fi
 
 printf " * Exporting the SOPS_AGE_KEY_FILE variable in your bashrc, zshrc or config.fish and source it\n"
-export SOPS_AGE_KEY_FILE=$SOPS_AGE_KEY_FILE
+export SOPS_AGE_KEY_FILE="$SOPS_AGE_KEY_FILE"
 
 printf " * Filling out the Age public key in the .config.env under BOOTSTRAP_AGE_PUBLIC_KEY\n"
 if [[ ! -f ${PROJECT_DIR}/.config.env ]]; then
     cp ${PROJECT_DIR}/.config.sample.env ${PROJECT_DIR}/.config.env
 fi
-AGE_PUBLIC_KEY=$(cat $SOPS_AGE_KEY_FILE | grep 'public key' | awk '{print $4}')
+AGE_PUBLIC_KEY=$(cat "$SOPS_AGE_KEY_FILE" | grep 'public key' | awk '{print $4}')
 
 if [ "$OS" == "MacOS" ]; then
     source ~/.bash_profile
