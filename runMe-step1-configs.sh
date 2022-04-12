@@ -9,9 +9,6 @@ export PROJECT_DIR=$(git rev-parse --show-toplevel)
 # Load custom preconfig
 source "${PROJECT_DIR}/scripts/pre-conf.inc"
 
-# shellcheck disable=SC2155
-export SOPS_AGE_KEY_FILE=~/.config/sops/age/keys.txt
-
 # shellcheck disable=SC1091
 source "${PROJECT_DIR}/.config.env"
 
