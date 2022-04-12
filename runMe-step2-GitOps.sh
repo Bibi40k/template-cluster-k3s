@@ -46,4 +46,4 @@ kubectl --kubeconfig=$KUBECONFIG apply --kustomize=${PROJECT_DIR}/cluster/base/f
 kubectl --kubeconfig=$KUBECONFIG apply --kustomize=${PROJECT_DIR}/cluster/base/flux-system
 
 # Verify Flux components are running in the cluster
-watch -n kubectl --kubeconfig=$KUBECONFIG get pods -n flux-system
+watch kubectl --kubeconfig=$KUBECONFIG get pods -n flux-system
