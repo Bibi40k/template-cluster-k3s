@@ -6,8 +6,8 @@ set -o pipefail
 # shellcheck disable=SC2155
 export PROJECT_DIR=$(git rev-parse --show-toplevel)
 
-# Load custom preconfig
-source "${PROJECT_DIR}/scripts/pre-conf.inc"
+# shellcheck disable=SC1091
+source "${PROJECT_DIR}/scripts/before-configs.sh"
 
 # shellcheck disable=SC1091
 source "${PROJECT_DIR}/.config.env"
@@ -226,5 +226,8 @@ _log() {
     local msg="${2}"
     printf "[%s] [%s] %s\n" "$(date -u)" "${type}" "${msg}"
 }
+
+main "--verify"
+exit 0
 
 main "$@"
