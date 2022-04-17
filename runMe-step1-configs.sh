@@ -68,6 +68,8 @@ main() {
         envsubst < "${PROJECT_DIR}/tmpl/ansible/kube-vip.yml" \
             > "${PROJECT_DIR}/provision/ansible/inventory/group_vars/kubernetes/kube-vip.yml"
     fi
+
+    flux get kustomizations --watch
 }
 
 parse_command_line() {
