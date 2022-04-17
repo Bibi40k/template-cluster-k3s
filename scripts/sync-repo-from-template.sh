@@ -17,5 +17,5 @@ fi
 
 git pull template main # --allow-unrelated-histories
 
-echo "Push changes to main remote"
-git push origin main
+# echo "Push changes to main remote"
+# git push origin main
