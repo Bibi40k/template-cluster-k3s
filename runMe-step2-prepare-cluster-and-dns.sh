@@ -51,14 +51,6 @@ cat "${SOPS_AGE_KEY_FILE}" |
     -n flux-system create secret generic sops-age \
     --from-file=age.agekey=/dev/stdin
 
-
-# git add -A
-# git commit -m "push from step2-GitOps"
-# git push
-
-# # Install Flux
-# kubectl --kubeconfig=$KUBECONFIG apply --kustomize=${PROJECT_DIR}/cluster/base/flux-system
-# kubectl --kubeconfig=$KUBECONFIG apply --kustomize=${PROJECT_DIR}/cluster/base/flux-system
-
-# # Verify Flux components are running in the cluster
-# watch kubectl --kubeconfig=$KUBECONFIG get pods -n flux-system
+git add -A
+git commit -m "push from step2-GitOps"
+git push
