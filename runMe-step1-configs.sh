@@ -58,9 +58,9 @@ main() {
         envsubst < "${PROJECT_DIR}/tmpl/terraform/secret.sops.yaml" \
             > "${PROJECT_DIR}/provision/terraform/cloudflare/secret.sops.yaml"
         sops --encrypt --in-place "${PROJECT_DIR}/provision/terraform/cloudflare/secret.sops.yaml"
-        # # ansible
-        # envsubst < "${PROJECT_DIR}/tmpl/ansible/kube-vip.yml" \
-        #     > "${PROJECT_DIR}/provision/ansible/inventory/group_vars/kubernetes/kube-vip.yml"
+        # ansible
+        envsubst < "${PROJECT_DIR}/tmpl/ansible/kube-vip.yml" \
+            > "${PROJECT_DIR}/provision/ansible/inventory/group_vars/kubernetes/kube-vip.yml"
     fi
 }
 
