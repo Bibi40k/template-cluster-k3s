@@ -218,6 +218,7 @@ verify_cloudflare() {
 
 success() {
     printf "\nAll checks pass!"
+    main
     exit 0
 }
 
@@ -228,6 +229,5 @@ _log() {
 }
 
 main "--verify"
-exit 0
 
 main "$@"
