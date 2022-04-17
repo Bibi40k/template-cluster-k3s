@@ -14,10 +14,8 @@ elif [ "$OS" == "Linux" ]; then
 fi
 
 KUBECONFIG_FILE="${PROJECT_DIR}/provision/kubeconfig"
+talosctl kubeconfig "${KUBECONFIG_FILE}"
 
-if [[ ! -f "${KUBECONFIG_FILE}" ]]; then
-    talosctl kubeconfig "${KUBECONFIG_FILE}"
-fi
 # Verify the nodes are online
 # https://github.com/k8s-at-home/template-cluster-k3s#-installing-k3s-with-ansible
 kubectl --kubeconfig="${KUBECONFIG_FILE}" get nodes
